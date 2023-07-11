@@ -1,16 +1,18 @@
 from django.shortcuts import render
 
-finches = [
-    {'name': 'Birdie', 'breed': 'house', 'description': 'black and red', 'age': 2},
-  {'name': 'Tweetie', 'breed': 'purple', 'description': 'aggressive and bold', 'age': 5},
-  {'name': 'Flapper', 'breed': 'gouldian', 'description': 'protective and loving', 'age': 3},
-]
+from .models import Finch
 
 def home(request):
     return render(request, 'home.html')
 def about(request):
     return render(request, 'about.html')
 def finches_index(request):
+    finches = Finch.objects.all()
     return render(request, 'finches/index.html', {
         'finches': finches
     })
+def finches_detail(request, finch_id):
+    finch = Finch.objects.get(id=finch_id)
+    return render(request, 'finches/detail.html', {
+    'finch': finch
+})
